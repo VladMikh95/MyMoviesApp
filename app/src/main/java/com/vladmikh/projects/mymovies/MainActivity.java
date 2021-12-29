@@ -1,10 +1,11 @@
 package com.vladmikh.projects.mymovies;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.vladmikh.projects.mymovies.data.Movie;
 import com.vladmikh.projects.mymovies.utils.JSONUtils;
@@ -18,14 +19,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        RecyclerView recyclerView = null;
+        MovieAdapter movieAdapter = null;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        recyclerView = findViewById(R.id.recyclerViewMovies);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        movieAdapter = new MovieAdapter();
         JSONObject result = NetworkUtils.getJSONFromNetwork(1, 1);
         ArrayList<Movie> movies = JSONUtils.getMovieFromJSON(result);
-        StringBuilder builder = new StringBuilder();
-        for (Movie i : movies) {
-            builder.append(i.getTitle()).append("\n");
-        }
-        Log.i("abc", builder.toString());
+        movieAdapter.setMovies(movies);
+        recyclerView.setAdapter(movieAdapter);
+
     }
 }

@@ -21,6 +21,10 @@ public class JSONUtils {
     private static final String KEY_VOTE_AVERAGE = "vote_average";
     private static final String KEY_REALISE_DATE = "release_date";
 
+    private static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/";
+    private static final String SMALL_POSTER_SIZE = "w185";
+    private static final String LARGE_POSTER_SIZE = "w780";
+
     public static ArrayList<Movie> getMovieFromJSON(JSONObject jsonObject) {
         ArrayList<Movie> results = new ArrayList<>();
         if (jsonObject == null) {
@@ -35,13 +39,14 @@ public class JSONUtils {
                 String title = jsonMovie.getString(KEY_TITLE);
                 String originalTitle = jsonMovie.getString(KEY_ORIGINAL_TITLE);
                 String overview = jsonMovie.getString(KEY_OVERVIEW);
-                String posterPath = jsonMovie.getString(KEY_POSTER_PATH);
+                String posterPath = POSTER_BASE_URL + SMALL_POSTER_SIZE + jsonMovie.getString(KEY_POSTER_PATH);
+                String largePosterPath = POSTER_BASE_URL +LARGE_POSTER_SIZE + jsonMovie.getString(KEY_POSTER_PATH);
                 String backdropPath = jsonMovie.getString(KEY_BACKDROP_PATH);
                 double voteAverage = jsonMovie.getDouble(KEY_VOTE_AVERAGE);
                 String releaseDate = jsonMovie.getString(KEY_REALISE_DATE);
 
                 Movie movie = new Movie(id, voteCount,title, originalTitle, overview,posterPath,
-                        backdropPath, voteAverage, releaseDate);
+                        largePosterPath, backdropPath, voteAverage, releaseDate);
                 results.add(movie);
             }
         } catch (JSONException e) {
