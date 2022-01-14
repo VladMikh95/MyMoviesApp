@@ -1,8 +1,14 @@
 package com.vladmikh.projects.mymovies.data;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "movies")
 public class Movie {
 
+    @PrimaryKey
     private int id;
+
     private int voteCount;
     private String title;
     private String originalTitle;

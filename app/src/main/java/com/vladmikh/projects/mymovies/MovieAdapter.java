@@ -4,21 +4,44 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.vladmikh.projects.mymovies.data.Movie;
+import com.vladmikh.projects.mymovies.utils.JSONUtils;
+import com.vladmikh.projects.mymovies.utils.NetworkUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
 
-    private ArrayList<Movie> movies;
+    private List<Movie> movies;
+    private OnMovieClickListener onMovieClickListener;
+    private OnReachEndMoviesListener onReachEndMoviesListener;
 
     public MovieAdapter() {
         movies = new ArrayList<>();
+    }
+
+    interface OnMovieClickListener {
+        void onMovieClick(int position);
+    }
+    interface OnReachEndMoviesListener {
+        void onReachEndMovies();
+    }
+
+    public void setOnMovieClickListener(OnMovieClickListener onMovieClickListener) {
+        this.onMovieClickListener = onMovieClickListener;
+    }
+
+    public void setOnReachEndMoviesListener(OnReachEndMoviesListener onReachEndMoviesListener) {
+        this.onReachEndMoviesListener = onReachEndMoviesListener;
     }
 
     @NonNull
@@ -32,6 +55,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
         Picasso.get().load(movie.getPosterPath()).into(holder.imageViewHolder);
+        if (position > movies.size() - 3 && onReachEndMoviesListener != null) {
+            onReachEndMoviesListener.onReachEndMovies();
+        }
     }
 
     @Override
@@ -39,17 +65,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return movies.size();
     }
 
-    public void setMovies(ArrayList<Movie> movies) {
+    public void setMovies(List<Movie> movies) {
         this.movies = movies;
         notifyDataSetChanged();
     }
 
-    public void addMovies(ArrayList<Movie> movies) {
+    public void addMovies(List<Movie> movies) {
         this.movies.addAll(movies);
         notifyDataSetChanged();
     }
 
-    public ArrayList<Movie> getMovies() {
+    public List<Movie> getMovies() {
         return movies;
     }
 
@@ -60,6 +86,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewHolder = itemView.findViewById(R.id.smallImageView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (onMovieClickListener != null) {
+                        onMovieClickListener.onMovieClick(getAdapterPosition());
+                    }
+                }
+            });
+
         }
+
     }
 }

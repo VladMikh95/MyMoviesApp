@@ -27,8 +27,8 @@ public class NetworkUtils {
     private static final String SORT_BY_POPULARITY_VALUE = "popularity.desc";
     private static final String SORT_BY_VOTE_AVERAGE_VALUE = "vote_average.desc";
 
-    private static final int SORT_BY_POPULARITY_VALUE_NUM  = 0;
-    private static final int SORT_BY_VOTE_AVERAGE_VALUE_NUM = 1;
+    public static final int SORT_BY_POPULARITY_VALUE_NUM  = 0;
+    public static final int SORT_BY_VOTE_AVERAGE_VALUE_NUM = 1;
 
     /*
     The method returns a parameter by which movies will be sorted depending on the user's choice
