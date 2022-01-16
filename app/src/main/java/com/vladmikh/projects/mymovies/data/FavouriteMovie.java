@@ -1,6 +1,7 @@
 package com.vladmikh.projects.mymovies.data;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 
 @Entity(tableName = "favourite_movies")
 public class FavouriteMovie extends Movie{
@@ -10,6 +11,7 @@ public class FavouriteMovie extends Movie{
         super(id, voteCount, title, originalTitle, overview, posterPath, largePosterPath, backdropPath, voteAverage, releaseDate);
     }
 
+    @Ignore
     public FavouriteMovie(Movie movie) {
         super(movie.getId(), movie.getVoteCount(), movie.getTitle(), movie.getOriginalTitle(), movie.getOverview(), movie.getPosterPath(),
                 movie.getLargePosterPath(), movie.getBackdropPath(), movie.getVoteAverage(), movie.getReleaseDate());

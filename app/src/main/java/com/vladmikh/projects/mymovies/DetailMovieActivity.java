@@ -1,5 +1,6 @@
 package com.vladmikh.projects.mymovies;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -7,6 +8,9 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +21,7 @@ import com.vladmikh.projects.mymovies.data.MainViewModel;
 import com.vladmikh.projects.mymovies.data.Movie;
 
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class DetailMovieActivity extends AppCompatActivity {
 
@@ -34,6 +39,30 @@ public class DetailMovieActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private int movieId;
     private FavouriteMovie favouriteMovie;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId) {
+            case R.id.itemMain:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.itemFavourite:
+                Intent intentFavourite = new Intent(this, FavoriteMoviesActivity.class);
+                startActivity(intentFavourite);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
