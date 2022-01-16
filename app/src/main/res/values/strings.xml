@@ -3,4 +3,12 @@
     <string name="small_poster_description">Постер фильм</string>
     <string name="text_popularity">Наиболее популярные</string>
     <string name="text_top_rated">Наиболее рейтинговые</string>
+    <string name="textView_title">Название:</string>
+    <string name="textView_original_title">Оригинальное название:</string>
+    <string name="textView_rating">Рейтинг</string>
+    <string name="textView_release_date">Дата релиза:</string>
+    <string name="textView_description">Описание:</string>
+    <string name="text_movie_poster">Постер фильма</string>
+    <string name="text_image_view_remove_favourite_movie">Удалить из списка любимых фильмов</string>
+    <string name="text_imageview_add_favourite_movie">Добавить в список любимых фильмов</string>
 </resources>

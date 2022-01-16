@@ -7,7 +7,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Movie.class}, version = 1, exportSchema = false)
+@Database(entities = {Movie.class, FavouriteMovie.class}, version = 2, exportSchema = false)
 public abstract class MoviesDatabase extends RoomDatabase {
 
     private static MoviesDatabase database;
@@ -17,7 +17,9 @@ public abstract class MoviesDatabase extends RoomDatabase {
     public static MoviesDatabase getInstance(Context context) {
         synchronized (LOCK) {
             if (database == null) {
-                database = Room.databaseBuilder(context, MoviesDatabase.class, DATABASE_NAME).build();
+                database = Room.databaseBuilder(context, MoviesDatabase.class, DATABASE_NAME)
+                        .fallbackToDestructiveMigration()
+                        .build();
             }
         }
         return database;

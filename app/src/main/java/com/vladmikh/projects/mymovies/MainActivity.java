@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -59,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
         movieAdapter.setOnMovieClickListener(new MovieAdapter.OnMovieClickListener() {
             @Override
             public void onMovieClick(int position) {
-                Toast.makeText(getApplicationContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, DetailMovieActivity.class);
+                intent.putExtra(DetailMovieActivity.MOVIE_ID, movieAdapter.getMovies().get(position).getId());
+                startActivity(intent);
             }
         });
 
