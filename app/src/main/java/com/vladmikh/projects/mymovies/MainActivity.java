@@ -19,6 +19,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vladmikh.projects.mymovies.adapters.MovieAdapter;
 import com.vladmikh.projects.mymovies.data.MainViewModel;
 import com.vladmikh.projects.mymovies.data.Movie;
 import com.vladmikh.projects.mymovies.utils.JSONUtils;

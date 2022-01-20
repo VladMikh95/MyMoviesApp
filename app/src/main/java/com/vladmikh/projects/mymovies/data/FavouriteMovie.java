@@ -7,13 +7,13 @@ import androidx.room.Ignore;
 public class FavouriteMovie extends Movie{
 
 
-    public FavouriteMovie(int id, int voteCount, String title, String originalTitle, String overview, String posterPath, String largePosterPath, String backdropPath, double voteAverage, String releaseDate) {
-        super(id, voteCount, title, originalTitle, overview, posterPath, largePosterPath, backdropPath, voteAverage, releaseDate);
+    public FavouriteMovie(int uniqueId, int id, int voteCount, String title, String originalTitle, String overview, String posterPath, String largePosterPath, String backdropPath, double voteAverage, String releaseDate) {
+        super(uniqueId, id, voteCount, title, originalTitle, overview, posterPath, largePosterPath, backdropPath, voteAverage, releaseDate);
     }
 
     @Ignore
     public FavouriteMovie(Movie movie) {
-        super(movie.getId(), movie.getVoteCount(), movie.getTitle(), movie.getOriginalTitle(), movie.getOverview(), movie.getPosterPath(),
+        super(movie.getUniqueId(), movie.getId(), movie.getVoteCount(), movie.getTitle(), movie.getOriginalTitle(), movie.getOverview(), movie.getPosterPath(),
                 movie.getLargePosterPath(), movie.getBackdropPath(), movie.getVoteAverage(), movie.getReleaseDate());
     }
 }

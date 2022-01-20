@@ -13,4 +13,5 @@
     <string name="text_imageview_add_favourite_movie">Добавить в список любимых фильмов</string>
     <string name="item_main">Главная</string>
     <string name="item_favourite">Избранное</string>
+    <string name="imageview_play_movie">Смотреть видео</string>
 </resources>

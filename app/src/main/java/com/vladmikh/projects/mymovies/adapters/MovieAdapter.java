@@ -1,20 +1,16 @@
-package com.vladmikh.projects.mymovies;
+package com.vladmikh.projects.mymovies.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.vladmikh.projects.mymovies.R;
 import com.vladmikh.projects.mymovies.data.Movie;
-import com.vladmikh.projects.mymovies.utils.JSONUtils;
-import com.vladmikh.projects.mymovies.utils.NetworkUtils;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +25,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         movies = new ArrayList<>();
     }
 
-    interface OnMovieClickListener {
+    public interface OnMovieClickListener {
         void onMovieClick(int position);
     }
-    interface OnReachEndMoviesListener {
+    public interface OnReachEndMoviesListener {
         void onReachEndMovies();
     }
 

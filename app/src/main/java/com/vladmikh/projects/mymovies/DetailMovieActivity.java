@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,9 +19,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.vladmikh.projects.mymovies.adapters.ReviewAdapter;
+import com.vladmikh.projects.mymovies.adapters.TrailerAdapter;
 import com.vladmikh.projects.mymovies.data.FavouriteMovie;
 import com.vladmikh.projects.mymovies.data.MainViewModel;
 import com.vladmikh.projects.mymovies.data.Movie;
+import com.vladmikh.projects.mymovies.data.Review;
+import com.vladmikh.projects.mymovies.data.Trailer;
+import com.vladmikh.projects.mymovies.utils.JSONUtils;
+import com.vladmikh.projects.mymovies.utils.NetworkUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.zip.Inflater;
@@ -34,6 +45,11 @@ public class DetailMovieActivity extends AppCompatActivity {
     private TextView textViewReleaseDate;
     private TextView textViewOverview;
     private ImageView imageViewAddDeleteFavouriteMovie;
+    private RecyclerView recyclerViewTrailer;
+    private RecyclerView recyclerViewReview;
+    private TrailerAdapter trailerAdapter;
+    private ReviewAdapter reviewAdapter;
+
 
     private Movie movie;
     private MainViewModel viewModel;
@@ -75,6 +91,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         textViewReleaseDate = findViewById(R.id.textViewReleaseDate);
         textViewOverview = findViewById(R.id.textViewOverview);
         imageViewAddDeleteFavouriteMovie = findViewById(R.id.imageViewAddDeleteFavourite);
+
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(MOVIE_ID)) {
@@ -91,6 +108,29 @@ public class DetailMovieActivity extends AppCompatActivity {
         textViewReleaseDate.setText(movie.getReleaseDate());
         textViewOverview.setText(movie.getOverview());
         checkFavouriteMovie();
+
+        recyclerViewTrailer = findViewById(R.id.recyclerViewTrailers);
+        recyclerViewTrailer.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewReview = findViewById(R.id.recyclerViewReviews);
+        recyclerViewReview.setLayoutManager(new LinearLayoutManager(this));
+        trailerAdapter = new TrailerAdapter();
+        reviewAdapter = new ReviewAdapter();
+        recyclerViewTrailer.setAdapter(trailerAdapter);
+        recyclerViewReview.setAdapter(reviewAdapter);
+        JSONObject  jsonObjectTrailers = NetworkUtils.getJSONObjectForTrailers(movie.getId());
+        ArrayList<Trailer> trailers = JSONUtils.getTrailersFromJSON(jsonObjectTrailers);
+        trailerAdapter.setTrailers(trailers);
+        JSONObject jsonObjectReviews = NetworkUtils.getJSONObjectForReviews(movie.getId());
+        ArrayList<Review> reviews = JSONUtils.getReviewsFromJSON(jsonObjectReviews);
+        reviewAdapter.setReviews(reviews);
+
+        trailerAdapter.setOnTrailerClickListener(new TrailerAdapter.OnTrailerClickListener() {
+            @Override
+            public void onTrailerClick(String url) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+            }
+        });
     }
 
     public void onClickAddDeleteFavouriteMovie(View view) {

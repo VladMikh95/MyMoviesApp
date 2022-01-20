@@ -8,13 +8,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.vladmikh.projects.mymovies.adapters.MovieAdapter;
 import com.vladmikh.projects.mymovies.data.FavouriteMovie;
 import com.vladmikh.projects.mymovies.data.MainViewModel;
 import com.vladmikh.projects.mymovies.data.Movie;

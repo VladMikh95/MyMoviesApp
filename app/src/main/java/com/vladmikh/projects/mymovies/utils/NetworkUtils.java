@@ -16,16 +16,21 @@ import java.util.concurrent.ExecutionException;
 
 public class NetworkUtils {
 
+    private static final String BASE_URL ="https://api.themoviedb.org/3/discover/movie";
+    private static final String BASE_URL_TRAILER ="https://api.themoviedb.org/3/movie/%s/videos";
+    private static final String BASE_URL_REVIEWS ="https://api.themoviedb.org/3/movie/%s/reviews";
+
     private static final String PARAMS_API_KEY ="api_key";
     private static final String PARAMS_LANGUAGE = "language";
     private static final String PARAMS_SORT_BY = "sort_by";
     private static final String PARAMS_PAGE = "page";
+    private static final String PARAMS_VOTE_COUNT = "vote_count.gte";
 
     private static final String API_KEY_VALUE ="188ae58f236f44bf416d37ac632058c3";
-    private static final String BASE_URL ="https://api.themoviedb.org/3/discover/movie";
     private static final String LANGUAGE_VALUE = "language";
     private static final String SORT_BY_POPULARITY_VALUE = "popularity.desc";
     private static final String SORT_BY_VOTE_AVERAGE_VALUE = "vote_average.desc";
+    private static final int VOTE_COUNT = 1000;
 
     public static final int SORT_BY_POPULARITY_VALUE_NUM  = 0;
     public static final int SORT_BY_VOTE_AVERAGE_VALUE_NUM = 1;
@@ -43,6 +48,42 @@ public class NetworkUtils {
         return result;
     }
 
+    /*
+    The method creates a Url to get data about trailers from the Internet
+     */
+    private static URL buildURLTrailers (int movieId) {
+        URL result = null;
+        String urlTrailer = String.format(BASE_URL_TRAILER, movieId);
+        Uri uri = Uri.parse(urlTrailer).buildUpon()
+                .appendQueryParameter(PARAMS_API_KEY, API_KEY_VALUE)
+                .appendQueryParameter(PARAMS_LANGUAGE, LANGUAGE_VALUE)
+                .build();
+        try {
+            result = new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /*
+    The method creates a Url to get data about reviews from the Internet
+     */
+    private static URL buildURLReviews (int movieId) {
+        URL result = null;
+        String urlReviews = String.format(BASE_URL_REVIEWS, movieId);
+        Uri uri = Uri.parse(urlReviews).buildUpon()
+                .appendQueryParameter(PARAMS_API_KEY, API_KEY_VALUE)
+                .appendQueryParameter(PARAMS_LANGUAGE, LANGUAGE_VALUE)
+                .build();
+        try {
+            result = new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
     /*
     The method creates a Url to get data from the Internet
@@ -54,10 +95,36 @@ public class NetworkUtils {
                 .appendQueryParameter(PARAMS_LANGUAGE, LANGUAGE_VALUE)
                 .appendQueryParameter(PARAMS_SORT_BY, getSortByValue(sortBy))
                 .appendQueryParameter(PARAMS_PAGE, String.valueOf(page))
+                .appendQueryParameter(PARAMS_VOTE_COUNT, String.valueOf(VOTE_COUNT))
                 .build();
         try {
             result = new URL(uri.toString());
         } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static JSONObject getJSONObjectForTrailers(int id) {
+        JSONObject result = null;
+        URL url = buildURLTrailers(id);
+        try {
+            result = new JSONLoadTask().execute(url).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static JSONObject getJSONObjectForReviews(int id) {
+        JSONObject result = null;
+        URL url = buildURLReviews(id);
+        try {
+            result = new JSONLoadTask().execute(url).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return result;
