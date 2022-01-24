@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailMovieActivity">
+    tools:context=".DetailMovieActivity"
+    android:background="@color/teal_200">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,123 +25,25 @@
 
         <ImageView
             android:id="@+id/imageViewAddDeleteFavourite"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="@dimen/imageview_add_delete_favourite_size"
+            android:layout_height="@dimen/imageview_add_delete_favourite_size"
             android:onClick="onClickAddDeleteFavouriteMovie"
-            app:layout_constraintBottom_toTopOf="@+id/textViewTitle"
+            android:contentDescription="@string/text_imageview_add_favourite"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewBigPoster"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewBigPoster"
             app:srcCompat="@android:drawable/btn_star_big_on" />
 
-        <TextView
-            android:id="@+id/textViewTitleLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="8dp"
-            android:text="@string/textView_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewBigPoster" />
-
-        <TextView
-            android:id="@+id/textViewTitle"
+        <include
+            layout="@layout/movie_info"
+            android:id="@+id/movieInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewBigPoster" />
-
-        <TextView
-            android:id="@+id/textViewOriginalTitleLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/textView_original_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
-
-        <TextView
-            android:id="@+id/textViewOriginalTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
-
-        <TextView
-            android:id="@+id/textViewRatingLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/textView_rating"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewOriginalTitle" />
-
-        <TextView
-            android:id="@+id/textViewRating"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
-            app:layout_constraintTop_toBottomOf="@+id/textViewOriginalTitle" />
-
-        <TextView
-            android:id="@+id/textViewReleaseDateLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/textView_release_date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
-
-        <TextView
-            android:id="@+id/textViewReleaseDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
-            app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
-
-        <TextView
-            android:id="@+id/textViewDescriptionLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/textView_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewReleaseDateLabel" />
-
-        <TextView
-            android:id="@+id/textViewOverview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionLabel" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewTrailers"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBigPoster"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewOverview"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewReviews"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewTrailers"/>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineCenter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5"
-            app:layout_constraintTop_toTopOf="@+id/imageViewBigPoster" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

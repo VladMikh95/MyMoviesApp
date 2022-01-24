@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vladmikh.projects.mymovies.adapters.ReviewAdapter;
@@ -32,6 +33,7 @@ import com.vladmikh.projects.mymovies.utils.NetworkUtils;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.zip.Inflater;
 
 public class DetailMovieActivity extends AppCompatActivity {
@@ -55,6 +57,8 @@ public class DetailMovieActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private int movieId;
     private FavouriteMovie favouriteMovie;
+
+    private String language;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,6 +88,7 @@ public class DetailMovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
+        language = Locale.getDefault().getLanguage();
         imageViewBigPoster = findViewById(R.id.imageViewBigPoster);
         textViewTitle = findViewById(R.id.textViewTitle);
         textViewOriginalTitle = findViewById(R.id.textViewOriginalTitle);
@@ -101,7 +106,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         }
 
         movie = viewModel.getMovie(movieId);
-        Picasso.get().load(movie.getLargePosterPath()).into(imageViewBigPoster);
+        Picasso.get().load(movie.getLargePosterPath()).placeholder(R.drawable.camera).into(imageViewBigPoster);
         textViewTitle.setText(movie.getTitle());
         textViewOriginalTitle.setText(movie.getOriginalTitle());
         textViewRating.setText(Double.toString(movie.getVoteAverage()));
@@ -117,10 +122,10 @@ public class DetailMovieActivity extends AppCompatActivity {
         reviewAdapter = new ReviewAdapter();
         recyclerViewTrailer.setAdapter(trailerAdapter);
         recyclerViewReview.setAdapter(reviewAdapter);
-        JSONObject  jsonObjectTrailers = NetworkUtils.getJSONObjectForTrailers(movie.getId());
+        JSONObject  jsonObjectTrailers = NetworkUtils.getJSONObjectForTrailers(movie.getId(), language);
         ArrayList<Trailer> trailers = JSONUtils.getTrailersFromJSON(jsonObjectTrailers);
         trailerAdapter.setTrailers(trailers);
-        JSONObject jsonObjectReviews = NetworkUtils.getJSONObjectForReviews(movie.getId());
+        JSONObject jsonObjectReviews = NetworkUtils.getJSONObjectForReviews(movie.getId(), language);
         ArrayList<Review> reviews = JSONUtils.getReviewsFromJSON(jsonObjectReviews);
         reviewAdapter.setReviews(reviews);
 
@@ -136,11 +141,13 @@ public class DetailMovieActivity extends AppCompatActivity {
     public void onClickAddDeleteFavouriteMovie(View view) {
             if (viewModel.getFavouriteMovies() != null) {
                 if (favouriteMovie != null) {
-                    viewModel.deleteFavouriteMovie(new FavouriteMovie(viewModel.getMovie(movieId)));
+                    viewModel.deleteFavouriteMovie(favouriteMovie);
                     checkFavouriteMovie();
+                    Toast.makeText(this, R.string.message_delete_favourite, Toast.LENGTH_SHORT).show();
                 } else {
                     viewModel.insertFavouriteMovie(new FavouriteMovie(viewModel.getMovie(movieId)));
                     checkFavouriteMovie();
+                    Toast.makeText(this, R.string.message_add_to_favourite, Toast.LENGTH_SHORT).show();
                 }
 
             }

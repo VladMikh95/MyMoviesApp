@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.hardware.display.DisplayManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +29,9 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
     private MainViewModel viewModel;
+
+    private static final int COUNT_DP_IN_ONE_INCH = 160;
+    private static final int COUNT_MOVIE_BY_SCREEN_WIDTH = 2;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,7 +62,7 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_movies);
         recyclerView = findViewById(R.id.recyclerViewFavouriteMovies);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, getColumnCount()));
         movieAdapter = new MovieAdapter();
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         LiveData<List<FavouriteMovie>> favouriteMovies = viewModel.getFavouriteMovies();
@@ -82,6 +87,18 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    private int getColumnCount() {
+        int result = 0;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = (int) (displayMetrics.widthPixels / displayMetrics.density);
+        if (width / COUNT_DP_IN_ONE_INCH < COUNT_MOVIE_BY_SCREEN_WIDTH ){
+            result = COUNT_MOVIE_BY_SCREEN_WIDTH;
+        } else {
+            result = width / COUNT_DP_IN_ONE_INCH;
+        }
+        return result;
     }
 }

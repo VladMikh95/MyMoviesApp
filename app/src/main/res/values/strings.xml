@@ -1,17 +1,20 @@
 <resources>
     <string name="app_name">My Movies</string>
-    <string name="small_poster_description">Постер фильм</string>
-    <string name="text_popularity">Наиболее популярные</string>
-    <string name="text_top_rated">Наиболее рейтинговые</string>
-    <string name="textView_title">Название:</string>
-    <string name="textView_original_title">Оригинальное название:</string>
-    <string name="textView_rating">Рейтинг</string>
-    <string name="textView_release_date">Дата релиза:</string>
-    <string name="textView_description">Описание:</string>
-    <string name="text_movie_poster">Постер фильма</string>
-    <string name="text_image_view_remove_favourite_movie">Удалить из списка любимых фильмов</string>
-    <string name="text_imageview_add_favourite_movie">Добавить в список любимых фильмов</string>
-    <string name="item_main">Главная</string>
-    <string name="item_favourite">Избранное</string>
-    <string name="imageview_play_movie">Смотреть видео</string>
+    <string name="small_poster_description">Movie poster</string>
+    <string name="text_popularity">Most popular</string>
+    <string name="text_top_rated">Most rated</string>
+    <string name="textView_title">Name:</string>
+    <string name="textView_original_title">Original name:</string>
+    <string name="textView_rating">Rating:</string>
+    <string name="textView_release_date">Release date:</string>
+    <string name="textView_description">Description:</string>
+    <string name="text_movie_poster">Movie poster</string>
+    <string name="text_image_view_remove_favourite_movie">Delete from Favourites</string>
+    <string name="text_imageview_add_favourite_movie">Add to Favourites</string>
+    <string name="item_main">Main</string>
+    <string name="item_favourite">Favourites</string>
+    <string name="imageview_play_movie">Watch the video</string>
+    <string name="text_imageview_add_favourite">Add to Favourites</string>
+    <string name="message_add_to_favourite">Added to favorites</string>
+    <string name="message_delete_favourite">Deleted to favorites</string>
 </resources>

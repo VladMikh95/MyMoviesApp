@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="@dimen/trailer_item_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,10 +12,11 @@
 
         <ImageView
             android:id="@+id/imageViewPlayTrailer"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="8dp"
+            android:layout_width="@dimen/imageview_play_trailer_width"
+            android:layout_height="@dimen/imageview_play_trailer_width"
+            android:layout_margin="@dimen/trailer_item_margin"
             android:contentDescription="@string/imageview_play_movie"
+            android:background="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,7 +26,7 @@
             android:id="@+id/textViewNameTrailer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/trailer_item_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageViewPlayTrailer"
             app:layout_constraintTop_toTopOf="parent"

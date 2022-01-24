@@ -51,7 +51,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
         Picasso.get().load(movie.getPosterPath()).into(holder.imageViewHolder);
-        if (position > movies.size() - 3 && onReachEndMoviesListener != null) {
+        if (movies.size() >= 20 && position > movies.size() - 3 && onReachEndMoviesListener != null) {
             onReachEndMoviesListener.onReachEndMovies();
         }
     }
@@ -73,6 +73,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public List<Movie> getMovies() {
         return movies;
+    }
+
+    public void clear() {
+        movies.clear();
+        notifyDataSetChanged();
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
